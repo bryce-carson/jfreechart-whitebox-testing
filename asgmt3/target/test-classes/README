@@ -1,0 +1,6 @@
+HousePrices.csv was modified using sed to convert yes to 1 and no to 0
+for use as boolean data in asgmt. three for COMP 4299.
+
+HousePricesModified.csv is a modified version of HousePrices.csv
+wherein three randomly chosen values were deleted to make NULL values
+in the CSV.
