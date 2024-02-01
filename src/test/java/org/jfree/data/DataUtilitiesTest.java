@@ -42,7 +42,7 @@ class DataUtiltiesTest {
      */
     @ParameterizedTest
     @ValueSource(strings = { "housePricesModified", "housePricesInvalidated"})
-    public void calculateColumnTotalReturnsZeroWhenPassedInvalidDataObject(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+    public void zeroReturned(String fieldName) throws NoSuchFieldException, IllegalAccessException {
         final Field field = getClass().getField(fieldName);
         final DefaultCategoryDataset dataset = (DefaultCategoryDataset) field.get(field);
         final int COLUMN = 0;
@@ -60,7 +60,7 @@ class DataUtiltiesTest {
      */
     @ParameterizedTest
     @ValueSource(strings = { "housePricesModified", "housePricesInvalidated"})
-    public void calculateColumnTotalThrowsInvalidParameterExceptionWhenPassedInvalidDataObject(String fieldName) throws NoSuchFieldException, IllegalAccessException {
+    public void invalidParameterExceptionThrown(String fieldName) throws NoSuchFieldException, IllegalAccessException {
         final Field field = getClass().getField(fieldName);
         final DefaultCategoryDataset dataset = (DefaultCategoryDataset) field.get(field);
         final int COLUMN = 0;
@@ -81,7 +81,7 @@ class DataUtiltiesTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "HousePricesColumnSums.csv")
-    public void somethingOrOther(Double expected, int column) {
+    public void correctColumnSums(Double expected, int column) {
         assertSame(calculateColumnTotal(housePrices, column), expected);
     }
 }
