@@ -32,12 +32,11 @@
         <scope>test</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/gnujaxp/gnujaxp -->
+    <!-- https://mvnrepository.com/artifact/incanter/gnujaxp -->
     <dependency>
-        <groupId>gnujaxp</groupId>
+        <groupId>incanter</groupId>
         <artifactId>gnujaxp</artifactId>
-        <version>1.0.0</version>
-        <scope>runtime</scope>
+        <version>1</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
