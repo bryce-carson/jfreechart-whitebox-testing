@@ -33,27 +33,28 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/incanter/gnujaxp -->
-    <dependency>
-        <groupId>incanter</groupId>
-        <artifactId>gnujaxp</artifactId>
-        <version>1</version>
-    </dependency>
-
+    <!-- <dependency>
+         <groupId>incanter</groupId>
+         <artifactId>gnujaxp</artifactId>
+         <version>1</version>
+         </dependency>
+    -->
     <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
     <dependency>
         <groupId>org.jfree</groupId>
         <artifactId>jcommon</artifactId>
-        <version>1.0.24</version>
+        <version>1.0.17</version>
         <scope>runtime</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>6.1.0-M1</version>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
         <scope>provided</scope>
     </dependency>
+
 
     <!-- FIXME: these are JARs in my workstation local repository, and cannot be found on Maven Central. Java Servlet is assumped to be Jarkarta (Java EE) Servlet API, and hopefully things work; if not, then I'll finish watching Yasaman's video on what dependencies are truly required for CI. -->
     <!-- <dependency>
