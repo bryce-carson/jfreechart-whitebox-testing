@@ -105,6 +105,14 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+
+        <!-- Continuous integration and testing with GitHub Actions. -->
+        <plugin>
+            <groupId>com.github.hazendaz.maven</groupId>
+            <artifactId>coveralls-maven-plugin</artifactId>
+            <version>4.5.0-M2</version>
+            <!-- The repository token is provided through GitHub Actions using a secret. -->
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
