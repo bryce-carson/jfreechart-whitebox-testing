@@ -38,35 +38,35 @@
         <artifactId>gnujaxp</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
-        <systemPath>lib/gnujaxp.jar</systemPath>
+        <systemPath>${basedir}/../lib/gnujaxp.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon-cvs</artifactId>
         <version>1.0.0-rc1</version>
         <scope>system</scope>
-        <systemPath>lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
+        <systemPath>${basedir}/../lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon</artifactId>
         <version>1.0.5</version>
         <scope>system</scope>
-        <systemPath>lib/jcommmon-1.0.5.jar</systemPath>
+        <systemPath>${basedir}/../lib/jcommmon-1.0.5.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>mockito-all</artifactId>
         <version>2.0.2-beta</version>
         <scope>system</scope>
-        <systemPath>lib/mockito-all-2.0.2-beta.jar</systemPath>
+        <systemPath>${basedir}/../lib/mockito-all-2.0.2-beta.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>servlet</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
-        <systemPath>lib/servlet.jar</systemPath>
+        <systemPath>${basedir}/../lib/servlet.jar</systemPath>
     </dependency>
   </dependencies>
 
