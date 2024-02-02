@@ -31,39 +31,41 @@
         <version>5.10.1</version>
         <scope>test</scope>
     </dependency>
+
+    <!-- Difficult to obtain dependencies. -->
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>gnujaxp</artifactId>
         <version>1.0.0</version>
-        <scope>runtime</scope>
+        <scope>system</scope>
         <systemPath>${basedir}/lib/gnujaxp.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon-cvs</artifactId>
         <version>1.0.0-rc1</version>
-        <scope>runtime</scope>
+        <scope>system</scope>
         <systemPath>${basedir}/lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon</artifactId>
         <version>1.0.5</version>
-        <scope>runtime</scope>
+        <scope>system</scope>
         <systemPath>${basedir}/lib/jcommmon-1.0.5.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>mockito-all</artifactId>
         <version>2.0.2-beta</version>
-        <scope>runtime</scope>
+        <scope>system</scope>
         <systemPath>${basedir}/lib/mockito-all-2.0.2-beta.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>servlet</artifactId>
         <version>1.0.0</version>
-        <scope>runtime</scope>
+        <scope>system</scope>
         <systemPath>${basedir}/lib/servlet.jar</systemPath>
     </dependency>
   </dependencies>
