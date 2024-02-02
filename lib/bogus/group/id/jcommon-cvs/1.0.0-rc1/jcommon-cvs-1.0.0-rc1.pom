@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>bogus.group.id</groupId>
-  <artifactId>jcommon</artifactId>
-  <version>1.0.0</version>
+  <artifactId>jcommon-cvs</artifactId>
+  <version>1.0.0-rc1</version>
   <description>POM was created from install:install-file</description>
 </project>

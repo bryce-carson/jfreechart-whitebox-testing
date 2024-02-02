@@ -47,8 +47,8 @@
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
-        <artifactId>jcommon</artifactId>
-        <version>1.0.0-rc1-cvs</version>
+        <artifactId>jcommon-cvs</artifactId>
+        <version>1.0.0-rc1</version>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
