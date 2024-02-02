@@ -31,51 +31,41 @@
         <version>5.10.1</version>
         <scope>test</scope>
     </dependency>
-
-    <!-- https://mvnrepository.com/artifact/incanter/gnujaxp -->
-    <!-- <dependency>
-         <groupId>incanter</groupId>
-         <artifactId>gnujaxp</artifactId>
-         <version>1</version>
-         </dependency>
-    -->
-    <!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
     <dependency>
-        <groupId>org.jfree</groupId>
-        <artifactId>jcommon</artifactId>
-        <version>1.0.24</version>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
         <scope>runtime</scope>
+        <systemPath>${basedir}/lib/gnujaxp.jar</systemPath>
     </dependency>
-
-    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>3.0.1</version>
-        <scope>provided</scope>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
+        <scope>runtime</scope>
+        <systemPath>${basedir}/lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
     </dependency>
-
-
-    <!-- FIXME: these are JARs in my workstation local repository, and cannot be found on Maven Central. Java Servlet is assumped to be Jarkarta (Java EE) Servlet API, and hopefully things work; if not, then I'll finish watching Yasaman's video on what dependencies are truly required for CI. -->
-    <!-- <dependency>
-         <groupId>com.java</groupId>
-         <artifactId>servlet</artifactId>
-         <version>1.0.0</version>
-         <scope>runtime</scope>
-         </dependency>
-    -->
-    <!-- <dependency>
-         <groupId>org.jfree</groupId>
-         <artifactId>jcommon-cvs</artifactId>
-         <version>1.0.0-rc1</version>
-         <scope>runtime</scope>
-         </dependency> -->
-    <!-- <dependency>
-         <groupId>org.mockito</groupId>
-         <artifactId>mockito-all</artifactId>
-         <version>2.0.2-beta</version>
-         <scope>runtime</scope>
-         </dependency> -->
+    <dependency>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
+        <scope>runtime</scope>
+        <systemPath>${basedir}/lib/jcommmon-1.0.5.jar</systemPath>
+    </dependency>
+    <dependency>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
+        <scope>runtime</scope>
+        <systemPath>${basedir}/lib/mockito-all-2.0.2-beta.jar</systemPath>
+    </dependency>
+    <dependency>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
+        <scope>runtime</scope>
+        <systemPath>${basedir}/lib/servlet.jar</systemPath>
+    </dependency>
   </dependencies>
 
   <build>
