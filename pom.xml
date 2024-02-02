@@ -38,12 +38,12 @@
         <artifactId>gnujaxp</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
-        <systemPath>${HOME}/work/jfreechart-whitebox-testing/lib/gnujaxp.jar</systemPath>
+        <systemPath>${HOME}/work/jfreechart-whitebox-testing/lib/gnujaxp-1.0.0.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
-        <artifactId>jcommon-cvs</artifactId>
-        <version>1.0.0-rc1</version>
+        <artifactId>jcommon</artifactId>
+        <version>1.0.0-rc1-cvs</version>
         <scope>system</scope>
         <systemPath>${HOME}/work/jfreechart-whitebox-testing/lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
     </dependency>
@@ -68,7 +68,7 @@
         <artifactId>servlet</artifactId>
         <version>1.0.0</version>
         <scope>system</scope>
-        <systemPath>${HOME}/work/jfreechart-whitebox-testing/lib/servlet.jar</systemPath>
+        <systemPath>${HOME}/work/jfreechart-whitebox-testing/lib/servlet-1.0.0.jar</systemPath>
     </dependency>
   </dependencies>
 
