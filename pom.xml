@@ -17,6 +17,13 @@
     <maven.compiler.release>11</maven.compiler.release>
   </properties>
 
+  <repositories>
+      <repository>
+          <id>lib</id>
+          <url>file://${project.basedir}/lib</url>
+      </repository>
+  </repositories>
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
     <dependency>
@@ -32,43 +39,31 @@
         <scope>test</scope>
     </dependency>
 
-    <!-- Difficult to obtain dependencies. -->
+    <!-- Project-local repository -->
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>gnujaxp</artifactId>
         <version>1.0.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/../lib/gnujaxp-1.0.0.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon</artifactId>
         <version>1.0.0-rc1-cvs</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/../lib/jcommon-1.0.0-rc1-cvs.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>jcommon</artifactId>
         <version>1.0.5</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/../lib/jcommmon-1.0.5.jar</systemPath>
     </dependency>
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>mockito-all</artifactId>
         <version>2.0.2-beta</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/../lib/mockito-all-2.0.2-beta.jar</systemPath>
     </dependency>
-    <!-- NOTE: -->
-    <!-- /home/runner/work/jfreechart-whitebox-testing/jfreechart-whitebox-testing/../lib/gnujaxp.jar -->
     <dependency>
         <groupId>bogus.group.id</groupId>
         <artifactId>servlet</artifactId>
         <version>1.0.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/../lib/servlet-1.0.0.jar</systemPath>
     </dependency>
   </dependencies>
 
