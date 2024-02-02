@@ -18,14 +18,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class DataUtiltiesTest {
     final public int HOUSE_PRICES_ROW_COUNT = 546;
-    public DefaultCategoryDataset housePrices, housePricesModified, housePricesEmptyTable;
+    public static DefaultCategoryDataset housePrices, housePricesModified, housePricesEmptyTable;
 
     /**
      * @throws IOException
      * @throws FileNotFoundException
      */
     @BeforeAll
-    public void setup() throws IOException, FileNotFoundException {
+    public static void setup() throws IOException, FileNotFoundException {
         housePrices = (DefaultCategoryDataset) new CSV()
             .readCategoryDataset(new FileReader("HousePrices.csv"));
 
