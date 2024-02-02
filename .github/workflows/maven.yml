@@ -28,8 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    # - name: Build with Maven
-    #   run: mvn -B package --file pom.xml
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
 
     - name: Run coveralls-maven
       run: mvn -DrepoToken=${{ secrets.COVERALLS_REPO_TOKEN }} clean test jacoco:report coveralls:report
