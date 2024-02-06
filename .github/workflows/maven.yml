@@ -32,7 +32,8 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Run coveralls-maven
-      run: mvn -DrepoToken=${{ secrets.COVERALLS_REPO_TOKEN }} clean test jacoco:report coveralls:report
+      run: mvn -DrepoToken=${{ secrets.COVERALLS_REPO_TOKEN }} clean test jacoco:report
+      #run: mvn -DrepoToken=${{ secrets.COVERALLS_REPO_TOKEN }} clean test jacoco:report coveralls:report
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph

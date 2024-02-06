@@ -3,11 +3,13 @@ package org.jfree.data;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.jfree.data.Range.*;
 
 import org.junit.jupiter.api.Test;
@@ -129,7 +131,7 @@ class RangeTest {
 	@ParameterizedTest
 	@ValueSource(doubles = { -1.50, 0.00, 0.10, 0.25, 0.50, 0.75, 1.00, 1.25 })
 	public void saneRangeObjectsReturnsFromExpand(double percentage) {
-		double lower = range.length() * percentage,
+		double lower = range.getLength() * percentage,
 			upper = lower;
 		/** With <code>range</code> from the Class scope
 		 * having a length of one hundred, the first parameter
