@@ -32,8 +32,8 @@ class CorrectRowSumsArguments implements ArgumentsProvider {
 	 * Create a stream of object arrays (each of length two) to provide the
 	 * parameterized test <code>correctRowSums</code> with the arguments it requires
 	 * during each iteration of the test.
-	 * 
-	 * The ordering of the value and row-column is opposite that from the
+	 * <br/>
+	 * <em>NOTE:</em> The ordering of the value and row-column is opposite that from the
 	 * <code>HousePricesColumnSums.csv</code>, wherein the other file has the sum of
 	 * the column in the first field, and the column index in the second field. This
 	 * CSV has the row index in the first field, and the sum of the row in the
