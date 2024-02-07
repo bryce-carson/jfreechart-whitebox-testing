@@ -18,7 +18,7 @@ class CorrectColumnSumsArguments implements ArgumentsProvider {
      * Copied from https://www.baeldung.com/opencsv. Used for educational
      * purposes under Canadian copyright law.
      *
-     * @throws {@link Exception}
+     * @throws java.lang.Exception
      */
     public static List<String[]> readAllLines(Path filePath) throws Exception {
         try (Reader reader = Files.newBufferedReader(filePath)) {

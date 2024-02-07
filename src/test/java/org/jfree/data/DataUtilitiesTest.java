@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.FileNotFoundException;
@@ -14,9 +16,12 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidParameterException;
+
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.io.CSV;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -34,8 +39,7 @@ class DataUtilitiesTest {
 	/**
 	 * The number of rows in <code>HousePrices.csv</code>.
 	 */
-//	public static final int HOUSE_PRICES_ROW_COUNT = 546;
-	public static final int HOUSE_PRICES_ROW_COUNT = 273;
+    public static final int HOUSE_PRICES_ROW_COUNT = 546;
 
 	/**
 	 * The datasets which will be used in the various tests; one which is completely
@@ -93,11 +97,11 @@ class DataUtilitiesTest {
 	 */
 	@ParameterizedTest
 	@ValueSource(strings = { "Row", "Column" })
-	public void invalidParameterExceptionThrown(String rowOrColumn) throws NoSuchMethodException, SecurityException {
+	public void invalidParameterExceptionThrown(String dimension) throws NoSuchMethodException, SecurityException {
 		final int ROW_OR_COLUMN = 0;
-		Method method = DataUtilities.class.getDeclaredMethod("calculate" + rowOrColumn + "Total", Values2D.class,
+		Method method = DataUtilities.class.getDeclaredMethod("calculate" + dimension + "Total", Values2D.class,
 				int.class);
-		assertThrows(java.security.InvalidParameterException.class,
+		assertThrows(InvalidParameterException.class,
 				() -> method.invoke(null, housePricesEmptyTable, ROW_OR_COLUMN));
 	}
 
@@ -146,6 +150,22 @@ class DataUtilitiesTest {
 	public void correctRowSums(double expected, int row) {
 		assumeTrue(housePrices.getRowCount() == HOUSE_PRICES_ROW_COUNT);
 		assertSame(expected, calculateRowTotal(housePrices, row));
+	}
+	
+	/**
+	 * The reported count of rows should be equal to the actual row count in the test data.
+	 */
+	@Test
+	public void correctRowCount() {
+		assertSame(HOUSE_PRICES_ROW_COUNT, housePrices.getRowCount());
+	}
+	
+	/**
+	 * The reported count of columns should be equal to the actual column count in the test data.
+	 */
+	@Test
+	public void correctColumnCount() {
+		assertSame(HOUSE_PRICES_COLUMN_COUNT, housePrices.getColumnCount());
 	}
 
 	/**
@@ -199,9 +219,9 @@ class DataUtilitiesTest {
 		assertSame(KeyedValues.class, getCumulativePercentages(KEYED_VALUES).getClass().getInterfaces()[0]);
 	}
 	
-	
-//	@Test
-//	public void keyedValuesContainsCorrectCumulativePercentages() {
-//		
-//	}
+
+	@Test
+	public void keyedValuesContainsCorrectCumulativePercentages() {
+		fail("Test is unimplemented.");
+	}
 }
