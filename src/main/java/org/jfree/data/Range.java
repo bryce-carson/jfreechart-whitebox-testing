@@ -153,7 +153,7 @@ public strictfp class Range implements Serializable {
             return (upper > this.lower);
         }
         else {
-            return (upper < this.upper && upper >= lower);
+            return (lower <= this.upper && upper >= lower);
         }
     }
 
@@ -201,7 +201,7 @@ public strictfp class Range implements Serializable {
         }
         else {
             if (range2 == null) {
-                return range2;
+                return range1; // FIXED
             }
             else {
                 double l = Math.min(range1.getLowerBound(), 
@@ -272,6 +272,7 @@ public strictfp class Range implements Serializable {
      * @return A range representing the base range shifted right by delta.
      */
     public static Range shift(Range base, double delta) {
+    	if (base == null) throw new IllegalArgumentException("Argument: base cannot be null!");
         return shift(base, delta, false);
     }
     
@@ -314,12 +315,8 @@ public strictfp class Range implements Serializable {
     private static double shiftWithNoZeroCrossing(double value, double delta) {
         if (value > 0.0) {
             return Math.max(value + delta, 0.0);  
-        }
-        else if (value < 0.0) {
+        } else {
             return Math.min(value + delta, 0.0);
-        }
-        else {
-            return value + delta;   
         }
     }
     
@@ -339,7 +336,7 @@ public strictfp class Range implements Serializable {
             return false;
         }
         if (!(this.upper == range.upper)) {
-            return true;
+            return false;
         }
         return true;
     }

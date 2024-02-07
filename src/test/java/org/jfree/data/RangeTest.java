@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.ValueSource;
  * @version 1.0.0
  */
 class RangeTest {
-	
+
 	/** A parameter of shift and expand methods. */
 	public static final double ONE_HUNDRED_PERCENT = 1.00, ZERO_PERCENT = 0.00;
 
@@ -156,35 +156,22 @@ class RangeTest {
 	}
 
 	/**
-	 * Tests that {@link org.jfree.data.Range#combine(Range, Range)} returns
-	 * reasonable objects and values.
+	 * Tests that {@link org.jfree.data.Range#combine(Range, Range)} returns the
+	 * correct object when either argument is null.
+	 * 
+	 * <em>NOTE: The <code>assertNotNull</code> test was failing because the return
+	 * value within the second outer branch was incorrectly returning an object that
+	 * was null in that case..</em>
 	 */
 	@Test
 	public void saneReturnValuesFromCombine() {
-		assertAll(() -> {
-			assertNull(Range.combine(null, null));
-		},
-
-				() -> {
-					assertNotNull(Range.combine(range, range));
-				}, () -> {
-					assertNotNull(Range.combine(range, null));
-				}, () -> {
-					assertNotNull(Range.combine(null, range));
-				},
-
-				() -> {
-					assertEquals(range, Range.combine(range, range));
-				}, () -> {
-					assertEquals(range, Range.combine(null, range));
-				}, () -> {
-					assertEquals(range, Range.combine(range, null));
-				},
-
-				() -> {
-					assertEquals(new Range(-UPPER_BOUND, UPPER_BOUND),
-							Range.combine(range, new Range(-UPPER_BOUND, LOWER_BOUND)));
-				});
+		assertAll(() -> assertNull(Range.combine(null, null)), () -> assertNotNull(Range.combine(range, range)),
+				() -> assertNotNull(Range.combine(range, null)), () -> assertNotNull(Range.combine(null, range)),
+				() -> assertEquals(range, Range.combine(range, range)),
+				() -> assertSame(range, Range.combine(null, range)),
+				() -> assertSame(range, Range.combine(range, null)),
+				() -> assertEquals(new Range(-UPPER_BOUND, UPPER_BOUND),
+						Range.combine(range, new Range(-UPPER_BOUND, LOWER_BOUND))));
 	}
 
 	/**
@@ -239,14 +226,14 @@ class RangeTest {
 	 * test would be redundant when {@link #illegalArgumentExceptionThrown()}
 	 * already tests this behavior.
 	 */
-	@Disabled
-	@Test
-	public void expandThrowsIAEWhenLowerGreaterThanUpper() {
-		final double PERCENTAGE = -1.50;
-		assertThrows(IllegalArgumentException.class, () -> {
-			expand(range, PERCENTAGE, PERCENTAGE);
-		});
-	}
+//	@Disabled
+//	@Test
+//	public void expandThrowsIAEWhenLowerGreaterThanUpper() {
+//		final double PERCENTAGE = -1.50;
+//		assertThrows(IllegalArgumentException.class, () -> {
+//			expand(range, PERCENTAGE, PERCENTAGE);
+//		});
+//	}
 
 	/**
 	 * A simple, silly test for the {@link org.jfree.data.Range#hashCode()} method.
@@ -265,59 +252,61 @@ class RangeTest {
 	}
 
 	/** A test of the {@link org.jfree.data.Range#equals(Object)} method. */
+	@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void equalsReturnsCorrectValues() {
-		assertAll(() -> {
-			assertEquals(range, expand(range, ZERO_PERCENT, ZERO_PERCENT));
-		}, () -> {
-			assertNotEquals(range, expand(range, ONE_HUNDRED_PERCENT, ONE_HUNDRED_PERCENT));
-		}, () -> {
-			assertNotEquals(range, expand(range, ONE_HUNDRED_PERCENT, ZERO_PERCENT));
-		}, () -> {
-			/**
-			 * FIXME: the equals method should return false when the lower is the same but
-			 * the upper is different.
-			 */
-			assertNotEquals(range, expand(range, ZERO_PERCENT, ONE_HUNDRED_PERCENT));
-		});
+		assertAll(() -> assertEquals(range, expand(range, ZERO_PERCENT, ZERO_PERCENT)),
+				() -> assertNotEquals(range, expand(range, ONE_HUNDRED_PERCENT, ONE_HUNDRED_PERCENT)),
+				() -> assertNotEquals(range, expand(range, ONE_HUNDRED_PERCENT, ZERO_PERCENT)),
+				() -> assertNotEquals(range, expand(range, ZERO_PERCENT, ONE_HUNDRED_PERCENT)),
+				
+				// Test that equals will return false when presented with a non-Range object.
+				() -> assertFalse(range.equals("I'm not a Range object!")));
 	}
 
 	/** Tests of the {@link org.jfree.data.Range#shift(Range, double)} method. */
 	@Test
-	public void shiftThrowsInvalidParameterExceptionCorrectly() {
-		assertThrows(InvalidParameterException.class, () -> shift(null, ZERO_PERCENT));
+	public void shiftThrowsIllegalArgumentExceptionCorrectly() {
+		assertThrows(IllegalArgumentException.class, () -> shift(null, ZERO_PERCENT));
 	}
-	
+
 	/** Tests that the boolean parameter is respected. */
 	@Test
 	public void shiftWorksAsSpecified() {
 		final double negativeTen = -10.0, negativeFive = -5.0, zero = 0.0, five = 5.0, ten = 10.0, twenty = 20.0;
 		Range lessThanZero, containsZero, greaterThanZero;
-		
+
 		// Each of these ranges has a length of five.
 		lessThanZero = new Range(negativeTen, negativeFive);
 		containsZero = new Range(negativeFive, five);
 		greaterThanZero = new Range(five, ten);
-		
-		assertAll(() -> { assertEquals(zero, shift(range, five).getUpperBound()); },
-				() -> { assertEquals(zero, shift(range, ten).getLowerBound()); },
-				
-				// These reveal that both bounds are zero when allowZeroCrossing is false.
-				() -> { assertEquals(zero, shift(lessThanZero, twenty, false).getLowerBound()); },
-				() -> { assertEquals(zero, shift(lessThanZero, twenty, false).getUpperBound()); },
-				
-				() -> { assertEquals(zero, shift(lessThanZero, ten, true).getLowerBound()); },
-				() -> { assertEquals(five, shift(lessThanZero, ten, true).getUpperBound()); },
-				() -> { assertEquals(ten, shift(lessThanZero, twenty, true).getLowerBound()); },
-				
-				() -> { assertEquals(zero, shift(containsZero, five, false).getLowerBound()); },
-				() -> { assertEquals(zero, shift(containsZero, five, true).getLowerBound()); },
-				
-				() -> { assertEquals(zero, shift(containsZero, ten, false).getLowerBound()); },
-				() -> { assertEquals(five, shift(containsZero, ten, true).getLowerBound()); },
-				
-				// The boolean parameter does not affect ranges that do not cross zero.
-				() -> { assertEquals(ten, shift(greaterThanZero, five, false).getLowerBound()); },
-				() -> { assertEquals(ten, shift(greaterThanZero, five, true).getLowerBound()); });
+
+		// The first two assertions test that the default argument of false does not impact the outcome.
+		assertAll(() -> assertEquals(zero, shift(lessThanZero, five).getUpperBound()),
+			  () -> assertEquals(zero, shift(lessThanZero, ten).getLowerBound()),
+
+			  // These reveal that both bounds are zero when allowZeroCrossing is false.
+			  () -> assertEquals(zero, shift(lessThanZero, twenty, false).getLowerBound()),
+			  () -> assertEquals(zero, shift(lessThanZero, twenty, false).getUpperBound()),
+
+			  // These two assertions test that allowZeroCrossing does not return the
+			  // incorrect value: -10 + 10 = 0; -10 + 20 = 10; -5 + 10 = 5.
+			  () -> assertEquals(zero, shift(lessThanZero, ten, true).getLowerBound()),
+			  () -> assertEquals(ten, shift(lessThanZero, twenty, true).getLowerBound()),
+			  () -> assertEquals(five, shift(lessThanZero, ten, true).getUpperBound()),
+
+			  // These two assertions test that a lower bound may end at zero regardless
+			  // of the boolean argument when the result should be zero.
+			  () -> assertEquals(zero, shift(containsZero, five, false).getLowerBound()),
+			  () -> assertEquals(zero, shift(containsZero, five, true).getLowerBound()),
+
+			  // These two assertions test that a lower bound may end at zero or beyond
+			  // zero depending on the value of the boolean argument, and with a larger test value.
+			  () -> assertEquals(zero, shift(containsZero, ten, false).getLowerBound()),
+			  () -> assertEquals(five, shift(containsZero, ten, true).getLowerBound()),
+			  
+			  // The boolean parameter does not affect ranges that do not cross zero.
+			  () -> assertEquals(ten, shift(greaterThanZero, five, false).getLowerBound()),
+			  () -> assertEquals(ten, shift(greaterThanZero, five, true).getLowerBound()));
 	}
 }

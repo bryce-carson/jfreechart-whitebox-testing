@@ -104,15 +104,13 @@ public class CSV {
         BufferedReader reader = new BufferedReader(in);
         List columnKeys = null;
         int lineIndex = 0;
-        String line = reader.readLine();
-        while (line != null) {
+        String line;
+        while ((line = reader.readLine()) != null) {
             if (lineIndex == 0) {  // first line contains column keys
                 columnKeys = extractColumnKeys(line);
             }
-            else if(lineIndex % 2 == 0){  // remaining lines contain a row key and data values
-                extractRowKeyAndData(line, dataset, columnKeys);
-            }
-            line = reader.readLine();
+            // remaining lines contain a row key and data values
+            extractRowKeyAndData(line, dataset, columnKeys);
             lineIndex++;
         }
         return dataset;     

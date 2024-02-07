@@ -55,16 +55,21 @@ public abstract class DataUtilities {
 
     /**
      * Returns the sum of the values in one column of the supplied data
-     * table. With invalid input, a total of zero will be returned.
+     * table.
      * 
      * @param data  the table of values (<code>null</code> not permitted).
      * @param column  the column index (zero-based).
      * 
+     * @throws IllegalArgumentException if the data is invalid.
+     * 
      * @return The sum of the values in the specified column.
      */
-    public static double calculateColumnTotal(Values2D data, int column) {
+    public static double calculateColumnTotal(Values2D data, int column) throws IllegalArgumentException {
         double total = 0.0;
+        
         int rowCount = data.getRowCount();
+        if (rowCount == 0) throw new IllegalArgumentException("Values2D: data argument has no rows; cannot tally columns.");
+        
         for (int r = 0; r < rowCount; r++) {
             Number n = data.getValue(r, column);
             if (n != null) {
@@ -81,11 +86,16 @@ public abstract class DataUtilities {
      * @param data  the table of values (<code>null</code> not permitted).
      * @param row  the row index (zero-based).
      * 
+     * @throws IllegalArgumentException if the data object is invalid.
+     * 
      * @return The total of the values in the specified row.
      */
-    public static double calculateRowTotal(Values2D data, int row) {
+    public static double calculateRowTotal(Values2D data, int row) throws IllegalArgumentException {
         double total = 0.0;
+        
         int columnCount = data.getColumnCount();
+        if (columnCount == 0) throw new IllegalArgumentException("Values2D: data has no columns; cannot tally rows.");
+        
         for (int c = 0; c < columnCount; c++) {
             Number n = data.getValue(row, c);
             if (n != null) {
