@@ -6,4 +6,5 @@
 
 # Coverage reports after fixing the issues in the SUT
 ## CUT: Range.java
+![](https://github.com/bryce-carson/jfreechart-whitebox-testing/blob/4a8db4f552f540357ce433a22b31a2da9ed278b0/src/test/resources/Screenshot%20from%202024-02-06%2019-52-49.png)
 ## CUT: DataUtilities.java
