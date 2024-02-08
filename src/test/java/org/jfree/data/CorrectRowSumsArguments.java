@@ -54,8 +54,8 @@ class CorrectRowSumsArguments implements ArgumentsProvider {
 		/** Index into <code>arguments</code>. */
 		while (!records.isEmpty()) {
 			String[] record = records.remove(0);
-			arguments[i][0] = record[1];
-			arguments[i++][1] = record[0];
+			arguments[i][0] = record[0]; // Row sum
+			arguments[i++][1] = record[1]; // Row number
 		}
 
 		return Stream.of(arguments);

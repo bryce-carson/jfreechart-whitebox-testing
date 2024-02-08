@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.io.CSV;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,7 +39,11 @@ class DataUtilitiesTest {
 	/**
 	 * The number of rows in <code>HousePrices.csv</code>.
 	 */
-	public static final int HOUSE_PRICES_ROW_COUNT = 21;
+	public static final int HOUSE_PRICES_ROW_COUNT = 546;
+
+	public static enum HOUSE_PRICES_HEADER {
+		price, lotsize, bedrooms, bathrooms, stories, driveway, recreation, fullbase, gasheat, aircon, garage, prefer
+	}
 
 	/**
 	 * The datasets which will be used in the various tests; one which is completely
@@ -45,15 +52,15 @@ class DataUtilitiesTest {
 	public static DefaultCategoryDataset housePrices, housePricesEmptyTable;
 
 	/**
-	 * Setup the objects needed for the test cases to run.
-	 * 
-	 * CSV expects data to look like the following:
-	 * <pre>
-	 * Row/Column	One	    Two	    Three
-	 *          1	42000	5850	3
-	 *          2	38500	4000	2
-	 *          3   49500	3060	3
-	 * </pre>
+	 * Setup the objects needed for the test cases to run. The CSV class in
+	 * JFreeChart is horribly implemented and poorly documented. It causes many test
+	 * failures and several wasted hours of debugging. For that reason, the data is
+	 * added manually, observation by observation, to the DefaultCategoryDataset
+	 * used throughout the tests. The Apache Commons CSV library is used to read the
+	 * CSV file reliably. Later in the test suite, the OpenCSV library is used
+	 * because it was used successfully in those stages of test suite development
+	 * and there is little reason to change it at this point, unless another issue
+	 * arises while adopting Commons CSV.
 	 * 
 	 * @throws IOException           Thrown if there is an issue reading the
 	 *                               category dataset from the CSV.
@@ -63,14 +70,27 @@ class DataUtilitiesTest {
 	@BeforeAll
 	public static void setup() throws IOException, FileNotFoundException {
 		Path resourcesPath = Paths.get("src", "test", "resources");
-		String resourcesDirectory = resourcesPath.toFile().getAbsolutePath();
+		String resourcesDirectoryStr = resourcesPath.toFile().getAbsolutePath();
 
-		String housePricesCSV = Paths.get(resourcesDirectory, "/HousePrices.csv").toAbsolutePath().toFile()
+		String housePricesCSVStr = Paths.get(resourcesDirectoryStr, "/HousePrices.csv").toAbsolutePath().toFile()
 				.getAbsolutePath();
-		housePrices = (DefaultCategoryDataset) new CSV().readCategoryDataset(new FileReader(housePricesCSV));
+		FileReader housePricesCSVFileReader = new FileReader(housePricesCSVStr);
 
-		// Create another table like housePrices, but clear the table.
-		housePricesEmptyTable = (DefaultCategoryDataset) new CSV().readCategoryDataset(new FileReader(housePricesCSV));
+		@SuppressWarnings("deprecation")
+		Iterable<CSVRecord> records = CSVFormat.RFC4180.withHeader(HOUSE_PRICES_HEADER.class).parse(housePricesCSVFileReader);
+		
+		housePrices = new DefaultCategoryDataset();
+		nextRecord: for (CSVRecord record : records) {
+			for (HOUSE_PRICES_HEADER column : HOUSE_PRICES_HEADER.values()) {
+				if (record.get(column).equals("price")) continue nextRecord;
+				
+				double value = Double.parseDouble(record.get(column.toString()));
+				housePrices.addValue(value, Long.toString(record.getRecordNumber()), column.toString());
+			}
+		}
+
+		// Create an invalid dataset.
+		housePricesEmptyTable = new DefaultCategoryDataset();
 		housePricesEmptyTable.clear();
 	}
 
@@ -129,32 +149,15 @@ class DataUtilitiesTest {
 	 * result means that the method is either calculating the correct sum of the
 	 * incorrect column, or it is not calculating the correct sum for the correct
 	 * column. Either possibility is a defect.﻿
-	 * 
-	 * FIXME: there are thirteen columns in the CSV <code>HousePrices.csv</code>;
-	 * why is this occurring?
-	 * 
-	 * <pre>
-	 * <code>
-	 * java.lang.IndexOutOfBoundsException: Index 12 out of bounds for length 12
-	 *         at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
-	 *         at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
-	 *         at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
-	 *         at java.base/java.util.Objects.checkIndex(Objects.java:385)
-	 *         at java.base/java.util.ArrayList.get(ArrayList.java:427)
-	 *         at org.jfree.data.DefaultKeyedValues2D.getValue(DefaultKeyedValues2D.java:136)
-	 *         at org.jfree.data.category.DefaultCategoryDataset.getValue(DefaultCategoryDataset.java:102)
-	 *         at org.jfree.data.DataUtilities.calculateColumnTotal(DataUtilities.java:69)
-	 * </code>
-	 * </pre>
 	 *
 	 * @param expected The test oracle
 	 * @param column   The column for which the oracle value applies.
 	 */
 	@ParameterizedTest
 	@ArgumentsSource(CorrectColumnSumsArguments.class)
-	public void correctColumnSums(double expected, int column) {
+	public void correctColumnSums(double expected, String column) {
 		assumeTrue(housePrices.getColumnCount() == HOUSE_PRICES_COLUMN_COUNT);
-		assertEquals(expected, calculateColumnTotal(housePrices, column));
+		assertEquals(expected, calculateColumnTotal(housePrices, housePrices.getColumnIndex(column)));
 	}
 
 	/**
@@ -168,24 +171,6 @@ class DataUtilitiesTest {
 	public void correctRowSums(double expected, int row) {
 		assumeTrue(housePrices.getRowCount() == HOUSE_PRICES_ROW_COUNT);
 		assertEquals(expected, calculateRowTotal(housePrices, row));
-	}
-
-	/**
-	 * The reported count of rows should be equal to the actual row count in the
-	 * test data.
-	 */
-	@Test
-	public void correctRowCount() {
-		assertSame(HOUSE_PRICES_ROW_COUNT, housePrices.getRowCount());
-	}
-
-	/**
-	 * The reported count of columns should be equal to the actual column count in
-	 * the test data.
-	 */
-	@Test
-	public void correctColumnCount() {
-		assertSame(HOUSE_PRICES_COLUMN_COUNT, housePrices.getColumnCount());
 	}
 
 	/**

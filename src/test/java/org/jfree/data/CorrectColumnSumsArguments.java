@@ -48,8 +48,8 @@ class CorrectColumnSumsArguments implements ArgumentsProvider {
         /** Index into <code>arguments</code>. */
         while (!records.isEmpty()) {
             String[] record = records.remove(0);
-            arguments[i][0] = record[0];
-            arguments[i++][1] = record[1];
+            arguments[i][0] = record[0]; // Column sum
+            arguments[i++][1] = record[1]; // Column name
         }
 
         return Stream.of(arguments);
