@@ -142,6 +142,11 @@
 					<version>4.5.0-M2</version>
 					<!-- The repository token is provided through GitHub Actions
 					using a secret. -->
+          <configuration>     
+            <jacocoReports>
+              <param>${project.reporting.outputDirectory}/${project.version}/jacoco/jacoco.xml</param>
+            </jacocoReports>
+          </configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
@@ -155,6 +160,9 @@
 							</goals>
 						</execution>
 					</executions>
+           <configuration>
+             <outputDirectory>${project.reporting.outputDirectory}/${project.version}/jacoco/jacoco.xml</outputDirectory>
+           </configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
